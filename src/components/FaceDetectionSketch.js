@@ -11,7 +11,7 @@ const OPTION = new faceapi.TinyFaceDetectorOptions({
 const CAPTURE_WIDTH = 1280
 const CAPTURE_HEIGHT = 720
 
-const FRAMING_BOX_WIDTH = 300
+const FRAMING_BOX_WIDTH = 400
 const FRAMING_BOX_HEIGHT = 400
 
 export default function sketch (p) {
@@ -124,6 +124,8 @@ export default function sketch (p) {
     p.rect(FRAMING_BOX._x, FRAMING_BOX._y, FRAMING_BOX._width, FRAMING_BOX._height);
 
     let allFacesWithinBoundaries = faceDrawings.reduce((acc, drawing) => {
+      p.rect(drawing.detection.box._x, drawing.detection.box._y, drawing.detection.box._width, drawing.detection.box._height);
+
       return acc && (drawing.expressions.happy >= 0.9) &&
         FRAMING_BOX._x < drawing.detection.box._x
         && FRAMING_BOX._y < drawing.detection.box._y
