@@ -82,7 +82,22 @@ export default class FaceDetectionContainer extends React.Component {
             className="FaceDetectionContainer-button"
             variant="contained"
             color="primary"
-            onClick={() => { this.setState({mode: STAND_BY, currentFilter: 0}) }}
+            onClick={() => {
+              fetch('http://localhost:8080/upload', {
+                method: 'POST',
+                headers: {
+                  'Accept': 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  base64Image: this.state.imageData,
+                })
+              })
+              .then(response => response.json())
+              .then(data => console.log(data))
+
+              this.setState({mode: STAND_BY, currentFilter: 0})
+            }}
             startIcon={<CloudUploadIcon />}
           >Upload Photo</Button>
         </div>
