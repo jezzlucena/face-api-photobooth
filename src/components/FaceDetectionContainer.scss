@@ -1,0 +1,36 @@
+.FaceDetectionContainer-wrapper {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%) scale(-1, 1);
+  transition: 1s transform ease;
+
+  &.finished {
+    transform: translate(-50%, -50%) scale(-0.8, 0.8);
+  }
+}
+
+.FaceDetectionContainer-close {
+  position: absolute !important;
+  top: 50px;
+  right: 50px;
+}
+
+.FaceDetectionContainer-actions {
+  position: absolute;
+  width: 100%;
+  bottom: 0;
+  padding: 20px 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  transition: 0.5s opacity ease;
+}
+
+.FaceDetectionContainer-button {
+  transition: 1s opacity ease;
+  margin: 0 20px !important;
+
+  &.hide {
+    opacity: 0;
+    pointer-events: none;
+  }
+}

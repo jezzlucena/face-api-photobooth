@@ -1,14 +1,14 @@
 import React from 'react';
-import './App.css';
-import objectDetectionSketch from './ObjectDetectionSketch';
+import './App.scss';
+import FaceDetectionContainer from './components/FaceDetectionContainer';
 
-import P5Wrapper from 'react-p5-wrapper';
+export default class App extends React.Component {
 
-export default class app extends React.Component {
-    
   render() {
       return (
-        <P5Wrapper sketch={objectDetectionSketch} />
+        <div className="App">
+          <FaceDetectionContainer/>
+        </div>
       )
     }
 }
