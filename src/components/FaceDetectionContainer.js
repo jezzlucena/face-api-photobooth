@@ -83,7 +83,7 @@ export default class FaceDetectionContainer extends React.Component {
             variant="contained"
             color="primary"
             onClick={() => {
-              fetch('https://face-api-photobooth.herokuapp.com:8080/upload', {
+              fetch('https://face-api-photobooth.herokuapp.com/upload', {
                 method: 'POST',
                 headers: {
                   'Accept': 'application/json',
