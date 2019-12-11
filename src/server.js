@@ -21,7 +21,7 @@ app.use(express.static(path.join(__dirname, "..", "/build")))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
 app.use(bodyParser.json({ limit: '50mb' }))
 
-var whitelist = ['http://localhost:8080', 'http://localhost:3000']
+var whitelist = ['https://face-api-photobooth.herokuapp.com:8080', 'https://face-api-photobooth.herokuapp.com:3000']
 var corsOptions = {
   origin: function (origin, callback) {
     if (whitelist.indexOf(origin) !== -1) {
