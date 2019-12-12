@@ -58,3 +58,9 @@ To run this in development mode, simply run
 `npm run dev`
 
 In development mode, you can open `http://localhost:8080` to view it in the browser. The page will reload if you make edits to the React or Sass portions of the app. You will also see any lint errors in the console.
+
+## References
+|Face Detection Using JavaScript API — face-api.js|[External Link](https://overflowjs.com/posts/Face-Detection-Using-JavaScript-API-face-apijs.html)|
+|Uploading Images to S3 from a React Single Page Application|[External Link](https://www.koan.co/blog/uploading-images-to-s3-from-a-react-spa)|
+|How to create a React frontend and a Node/Express backend and connect them|[External Link](https://www.freecodecamp.org/news/create-a-react-frontend-a-node-express-backend-and-connect-them-together-c5798926047c/)|
+|
