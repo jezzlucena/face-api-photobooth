@@ -1,38 +1,51 @@
-import "p5/lib/addons/p5.dom";
-import * as faceapi from 'face-api.js';
+import "p5/lib/addons/p5.dom"
+import * as faceapi from 'face-api.js'
 
 const MODELS_URL = '/models'
+
+let CAPTURE_WIDTH = 1280
+let CAPTURE_HEIGHT = 720
+
+let FRAMING_BOX_WIDTH = 400
+let FRAMING_BOX_HEIGHT = 400
 
 const TINY_FACE_OPTIONS = new faceapi.TinyFaceDetectorOptions({
   inputSize: 256,
   scoreThreshold: 0.5,
 })
 
-const CAPTURE_WIDTH = 1280
-const CAPTURE_HEIGHT = 720
-
-const FRAMING_BOX_WIDTH = 400
-const FRAMING_BOX_HEIGHT = 400
+const CAPTURE_CONSTRAINTS = {
+  video: {
+    facingMode: "user",
+    width: { ideal: CAPTURE_WIDTH },
+    height: { ideal: CAPTURE_HEIGHT },
+    frameRate: { ideal: 10, max: 60 }
+  },
+  audio: false
+}
 
 export default function sketch (p) {
-  let capture, canvas, p5Filter = null;
-  let faceDrawings = [];
+  let capture, canvas, p5Filter, readyToDetect = null
+  let faceDrawings = []
 
-  let capturing, detecting, filter;
-  let onTakePicture;
+  let capturing, detecting, filter
+  let onTakePicture
 
   function drawCapture() {
-    p.background(255);
-    p.image(capture, 0, 0);
-    p.fill(0,0,0,0);
+    p.background(255)
+    p.image(capture, 0, 0)
+    p.fill(0,0,0,0)
     if (p5Filter) p.filter(p5Filter)
   }
 
   function mapFaceDetectionData(data) {
-    if (detecting) faceDrawings = data;
+    if (detecting) faceDrawings = data
+    readyToDetect = true
   }
 
   function resizeCanvas() {
+    if (!canvas) return
+
     const canvasWidthFactor =  p.windowWidth / CAPTURE_WIDTH
     const canvasHeightFactor = p.windowHeight / CAPTURE_HEIGHT
 
@@ -59,35 +72,36 @@ export default function sketch (p) {
   }
 
   p.windowResized = async function() {
-    resizeCanvas();
+    resizeCanvas()
   }
 
   p.setup = async function () {
     await faceapi.loadTinyFaceDetectorModel(MODELS_URL)
     await faceapi.loadFaceExpressionModel(MODELS_URL)
 
-    canvas = p.createCanvas(CAPTURE_WIDTH, CAPTURE_HEIGHT)
-    canvas.id('canvas_element')
+    capture = p.createCapture(CAPTURE_CONSTRAINTS, stream => {
+      capture.id("video_element")
+      capture.hide()
 
-    resizeCanvas()
+      const videoEl = document.getElementById('video_element')
+      const newCaptureWidth = videoEl.videoWidth
+      const newCaptureHeight = videoEl.videoHeight
 
-    const constraints = {
-      video: {
-        mandatory: {
-          minWidth: CAPTURE_WIDTH,
-          minHeight: CAPTURE_HEIGHT
-        },
-        optional: [{ maxFrameRate: 24 }]
-      },
-      audio: false
-    };
+      FRAMING_BOX_HEIGHT = FRAMING_BOX_HEIGHT*newCaptureHeight/CAPTURE_HEIGHT
+      FRAMING_BOX_WIDTH = FRAMING_BOX_HEIGHT
 
-    capture = p.createCapture(constraints, () => {})
+      CAPTURE_WIDTH = newCaptureWidth
+      CAPTURE_HEIGHT = newCaptureHeight
 
-    capture.id("video_element")
-    capture.size(CAPTURE_WIDTH, CAPTURE_HEIGHT)
-    capture.hide()
-  };
+      capture.size(CAPTURE_WIDTH, CAPTURE_HEIGHT)
+
+      canvas = p.createCanvas(CAPTURE_WIDTH, CAPTURE_HEIGHT)
+      canvas.id('canvas_element')
+
+      readyToDetect = true
+      resizeCanvas()
+    })
+  }
 
   p.myCustomRedrawAccordingToNewPropsHandler = (props) => {
     if (props.onTakePicture) {
@@ -103,7 +117,7 @@ export default function sketch (p) {
   }
 
   p.draw = async () => {
-    if (!capture || !capturing) return
+    if (!capture || !canvas || !capturing) return
 
     drawCapture()
 
@@ -119,34 +133,34 @@ export default function sketch (p) {
       _y: CAPTURE_HEIGHT/2 - FRAMING_BOX_HEIGHT/2,
     }
 
-    p.stroke('white');
-    p.strokeWeight(4);
-    p.rect(FRAMING_BOX._x, FRAMING_BOX._y, FRAMING_BOX._width, FRAMING_BOX._height);
+    p.stroke('white')
+    p.strokeWeight(4)
+    p.rect(FRAMING_BOX._x, FRAMING_BOX._y, FRAMING_BOX._width, FRAMING_BOX._height)
 
     let allFacesWithinBoundaries = faceDrawings.reduce((acc, drawing) => {
-      p.strokeWeight(2);
-      p.rect(drawing.detection.box._x, drawing.detection.box._y, drawing.detection.box._width, drawing.detection.box._height);
+      p.strokeWeight(2)
+      p.rect(drawing.detection.box._x, drawing.detection.box._y, drawing.detection.box._width, drawing.detection.box._height)
 
       return acc && (drawing.expressions.happy >= 0.9) &&
         FRAMING_BOX._x < drawing.detection.box._x
         && FRAMING_BOX._y < drawing.detection.box._y
         && FRAMING_BOX._x + FRAMING_BOX._width > drawing.detection.box._x + drawing.detection.box._width
         && FRAMING_BOX._y + FRAMING_BOX._height > drawing.detection.box._y + drawing.detection.box._height
-    }, true);
+    }, readyToDetect)
 
     if (!!faceDrawings.length && allFacesWithinBoundaries && capturing) {
-      drawCapture()
-
       faceDrawings = []
-
+      drawCapture()
       onTakePicture(document.getElementById('canvas_element').toDataURL())
-
       return
     }
 
-    faceapi
-      .detectAllFaces(capture.id(), TINY_FACE_OPTIONS)
-      .withFaceExpressions()
-      .then((data) => mapFaceDetectionData(data));
+    if (readyToDetect) {
+      readyToDetect = false
+      faceapi
+        .detectAllFaces(capture.id(), TINY_FACE_OPTIONS)
+        .withFaceExpressions()
+        .then((data) => mapFaceDetectionData(data))
+    }
   }
-};
+}
