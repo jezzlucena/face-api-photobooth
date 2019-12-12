@@ -1,11 +1,60 @@
-Code for finding object/face in live webcam  using tensorflow.js/Face-api.js.
+# Photobooth
 
-Read the detailed blog - https://overflowjs.com/posts/Face-Detection-Using-JavaScript-API-face-apijs.html
+Photobooth is web application that recognizes a person's facial expressions and takes a photo once the user smiles within a bounding box in the captured image.
 
-Available Scripts In the project directory, you can run:
+A set of open-source frameworks, tools, and APIs were used to achieve this. Here is a list of some of these solutions:
 
-npm install
-npm start
-Runs the app in the development mode. Open http://localhost:3000 to view it in the browser.
+### Front End
+#### React
+Facebook's declarative, efficient, and flexible JavaScript library for building user interfaces.
 
-The page will reload if you make edits. You will also see any lint errors in the console.
+#### Sass
+A preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
+
+#### Material-UI
+Google's solution that provides React components for faster and easier web development.
+
+#### p5.js
+A JS client-side library for creating graphic and interactive experiences based on the core principles of Processing.
+
+### Machine Learning
+#### TensorFlow.js
+A library for machine learning in JavaScript
+
+#### face-api.js
+Face recognition API for the browser built on top of TensorFlow.js
+
+### Back End
+#### Node.js
+An open-source, cross-platform, server-side JavaScript runtime environment.
+
+#### Express
+A web application framework for Node.js designed for building web applications and APIs.
+
+### Services
+#### GitHub
+A global software development version control provider using Git.
+
+#### AWS / S3
+A service offered by Amazon Web Services that provides object storage through a web service interface.
+
+#### Heroku
+A cloud platform as a service supporting several programming languages.
+
+
+## Quick Start
+
+To run this application in development mode, first install all dependencies using `npm install` in the terminal.
+
+Aditionally, to enable picture uploading, it is necessary to create a local `.env` file in the root folder of this project. The basic structure of that file should look as follows:
+
+```
+S3_BUCKET=YOUR_BUCKET_NAME
+AWS_ACCESS_KEY=YOUR_ACCESS_KEY_ID
+AWS_SECRET_ACCESS_KEY=YOUR_SECRET_ACCESS_KEY
+```
+
+To run this in development mode, simply run
+`npm run dev`
+
+In development mode, you can open `http://localhost:8080` to view it in the browser. The page will reload if you make edits to the React or Sass portions of the app. You will also see any lint errors in the console.
