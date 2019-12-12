@@ -4,42 +4,24 @@ Photobooth is web application that recognizes a person's facial expressions and 
 
 A set of open-source frameworks, tools, and APIs were used to achieve this. Here is a list of some of these solutions:
 
-### Front End
-#### React
-Facebook's declarative, efficient, and flexible JavaScript library for building user interfaces.
-
-#### Sass
-A preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS).
-
-#### Material-UI
-Google's solution that provides React components for faster and easier web development.
-
-#### p5.js
-A JS client-side library for creating graphic and interactive experiences based on the core principles of Processing.
+#### Front End
+| React | Facebook's declarative, efficient, and flexible JavaScript library for building user interfaces. |
+| Sass | A preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS). |
+| Material-UI | Google's solution that provides React components for faster and easier web development. |
+| p5.js | A JS client-side library for creating graphic and interactive experiences based on the core principles of Processing. |
 
 ### Machine Learning
-#### TensorFlow.js
-A library for machine learning in JavaScript
-
-#### face-api.js
-Face recognition API for the browser built on top of TensorFlow.js
+| TensorFlow.js | A library for machine learning in JavaScript |
+| face-api.js | Face recognition API for the browser built on top of TensorFlow.js |
 
 ### Back End
-#### Node.js
-An open-source, cross-platform, server-side JavaScript runtime environment.
-
-#### Express
-A web application framework for Node.js designed for building web applications and APIs.
+| Node.js | An open-source, cross-platform, server-side JavaScript runtime environment. |
+| Express | A web application framework for Node.js designed for building web applications and APIs. |
 
 ### Services
-#### GitHub
-A global software development version control provider using Git.
-
-#### AWS / S3
-A service offered by Amazon Web Services that provides object storage through a web service interface.
-
-#### Heroku
-A cloud platform as a service supporting several programming languages.
+| GitHub | A global software development version control provider using Git. |
+| AWS / S3 | A service offered by Amazon Web Services that provides object storage through a web service interface. |
+| Heroku | A cloud platform as a service supporting several programming languages. |
 
 
 ## Quick Start
