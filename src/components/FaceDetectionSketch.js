@@ -119,6 +119,8 @@ export default function sketch (p) {
   p.draw = async () => {
     if (!capture || !canvas || !capturing) return
 
+    p.translate(CAPTURE_WIDTH, 0)
+    p.scale(-1, 1)
     drawCapture()
 
     if (!detecting) return

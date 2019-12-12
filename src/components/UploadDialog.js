@@ -7,6 +7,7 @@ import Dialog from '@material-ui/core/Dialog'
 import Button from '@material-ui/core/Button'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import CloudUploadIcon from '@material-ui/icons/CloudUpload'
+import GetAppIcon from '@material-ui/icons/GetApp'
 import ErrorIcon from '@material-ui/icons/Error'
 import ClearIcon from '@material-ui/icons/Clear'
 import DoneIcon from '@material-ui/icons/Done'
@@ -44,7 +45,7 @@ export default class UploadDialog extends React.Component {
         <CircularProgress/>
         <h3>Uploading...</h3>
         <div className="UploadDialog-text">
-          Your download QR Code will appear in a few seconds.
+          Your download link will appear in a few seconds.
         </div>
         <Button
           className="UploadDialog-button"
@@ -61,13 +62,23 @@ export default class UploadDialog extends React.Component {
         <div className="UploadDialog-text">
           Point your phone camera at the QR Code above to download it.
         </div>
-        <Button
-          className="UploadDialog-button"
-          variant="contained"
-          color="primary"
-          onClick={() => this.props.onReset()}
-          startIcon={<DoneIcon/>}
-        >All Done</Button>
+        <div>
+          <Button
+            className="UploadDialog-button"
+            variant="contained"
+            color="default"
+            target="_blank"
+            href={this.props.imageUrl}
+            startIcon={<GetAppIcon/>}
+          >Download</Button>
+          <Button
+            className="UploadDialog-button"
+            variant="contained"
+            color="primary"
+            onClick={() => this.props.onReset()}
+            startIcon={<DoneIcon/>}
+          >All Done</Button>
+        </div>
       </div>
     }
 
