@@ -52,6 +52,16 @@ A set of open-source frameworks, tools, and services were used to complete this 
 | AWS / S3 | A service offered by Amazon Web Services that provides object storage through a web service interface. |
 | Heroku | A cloud platform as a service supporting several programming languages. |
 
+## Compatibility
+Any modern web browser with support to HTML5 and the WebRTC API should be able to run this app. (E.g. Chrome 71+, Edge 18+, Firefox 71+, Opera 64+)
+
+## Known Issues
+| Browser | OS | Issue |
+| --- | --- | --- |
+| Safari | macOS | Safari's JavaScript engine is only able to process one frame after the "Take a Photo" button is clicked |
+| Safari | iOS | The WebRTC API is only accessible to websites that have SSL encryption enabled on Safari for iOS |
+| Any Other | iOS | Due to security constraints, the WebRTC API is not accessible to web browsers other than Safari on iOS |
+
 ## References
 | | |
 | --- | --- |
