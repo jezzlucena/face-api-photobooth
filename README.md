@@ -7,6 +7,7 @@ A set of open-source frameworks, tools, and APIs were used to achieve this. Here
 ## Stack
 
 ##### Front End
+| | |
 | --- | --- |
 | React | Facebook's declarative, efficient, and flexible JavaScript library for building user interfaces. |
 | Sass | A preprocessor scripting language that is interpreted or compiled into Cascading Style Sheets (CSS). |
@@ -14,16 +15,19 @@ A set of open-source frameworks, tools, and APIs were used to achieve this. Here
 | p5.js | A JS client-side library for creating graphic and interactive experiences based on the core principles of Processing. |
 
 #### Machine Learning
+| | |
 | --- | --- |
 | TensorFlow.js | A library for machine learning in JavaScript |
 | face-api.js | Face recognition API for the browser built on top of TensorFlow.js |
 
 #### Back End
+| | |
 | --- | --- |
 | Node.js | An open-source, cross-platform, server-side JavaScript runtime environment. |
 | Express | A web application framework for Node.js designed for building web applications and APIs. |
 
 #### Services
+| | |
 | --- | --- |
 | GitHub | A global software development version control provider using Git. |
 | AWS / S3 | A service offered by Amazon Web Services that provides object storage through a web service interface. |
@@ -48,6 +52,7 @@ To run this in development mode, simply run
 In development mode, you can open `http://localhost:8080` to view it in the browser. The page will reload if you make edits to the React or Sass portions of the app. You will also see any lint errors in the console.
 
 ## References
+| | |
 | --- | --- |
 | Face Detection Using JavaScript API — face-api.js | [External Link](https://overflowjs.com/posts/Face-Detection-Using-JavaScript-API-face-apijs.html) |
 | Uploading Images to S3 from a React Single Page Application | [External Link](https://www.koan.co/blog/uploading-images-to-s3-from-a-react-spa) |
