@@ -38,7 +38,7 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "..", "build/index.html"))
 })
 
-app.post('/upload', function(req, res){
+app.put('/photo', function(req, res){
   var dataUrl = req.body.base64Image
   const buffer = new Buffer(dataUrl.replace(/^data:image\/\w+;base64,/, ""), 'base64')
 

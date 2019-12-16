@@ -41,8 +41,8 @@ export default class PhotoboothContainer extends React.Component {
   }
 
   handleUpload() {
-    fetch('https://face-api-photobooth.herokuapp.com/upload', {
-      method: 'POST',
+    fetch('https://face-api-photobooth.herokuapp.com/photo', {
+      method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
