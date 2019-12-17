@@ -98,6 +98,7 @@ export default class UploadDialog extends React.Component {
 UploadDialog.propTypes = {
   open: PropTypes.bool,
   error: PropTypes.bool,
+  imageUrl: PropTypes.string,
   onReset: PropTypes.func,
   onRetry: PropTypes.func
 }

@@ -1,21 +1,17 @@
-const AWS = require('aws-sdk')
 const express = require('express')
 const bodyParser = require('body-parser')
 const dotenv = require('dotenv')
-const shortid = require('shortid')
 const path = require('path')
 const cors = require('cors')
+const mongoose = require('mongoose')
 
 dotenv.config({ path: path.resolve(__dirname, "..", ".env") })
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
-})
+mongoose.connect(process.env.MONGOOSE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+
+const photoController = require('./controllers/photo')
 
 const app = express()
-
-const s3 = new AWS.S3()
 
 app.use(express.static(path.join(__dirname, "..", "/build")))
 app.use(bodyParser.urlencoded({ limit: '50mb', extended: true }))
@@ -24,7 +20,7 @@ app.use(bodyParser.json({ limit: '50mb' }))
 var whitelist = ['https://face-api-photobooth.herokuapp.com', 'http://localhost:8080', 'http://localhost:3000']
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.indexOf(origin) !== -1) {
+    if (whitelist.includes(origin)) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -38,21 +34,6 @@ app.get("/", function(req, res) {
   res.sendFile(path.join(__dirname, "..", "build/index.html"))
 })
 
-app.put('/photo', function(req, res){
-  var dataUrl = req.body.base64Image
-  const buffer = new Buffer(dataUrl.replace(/^data:image\/\w+;base64,/, ""), 'base64')
-
-  var objData = {
-    Bucket: 'face-api-photobooth',
-    Key: `${shortid.generate()}.jpg`,
-    ContentType: "image/jpeg",
-    ContentEncoding: 'base64',
-    Body: buffer
-  }
-
-  s3.putObject(objData, function (err, data) {
-    res.json({ imageUrl: `https://face-api-photobooth.s3-us-west-1.amazonaws.com/${objData.Key}`})
-  })
-})
+app.put('/photo', photoController.create)
 
 app.listen(process.env.PORT || 8080)

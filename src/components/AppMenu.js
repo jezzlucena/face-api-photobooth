@@ -34,25 +34,27 @@ export default class AppMenu extends React.Component {
         aria-haspopup="true"
         onClick={event => this.handleOpenMenu(event)}
       ><MenuIcon/></Fab>
-      <Menu
-        id="simple-menu"
-        anchorEl={this.state.menuAnchor}
-        keepMounted
-        style={{transform: "translate(35px, 35px)"}}
-        open={Boolean(this.state.menuAnchor)}
-        onClose={() => this.handleCloseMenu()}
-      >
-        <Tooltip title="Coming Soon" placement="right">
+      {this.state.menuAnchor &&
+        <Menu
+          id="simple-menu"
+          anchorEl={this.state.menuAnchor}
+          keepMounted
+          style={{transform: "translate(35px, 35px)"}}
+          open={Boolean(this.state.menuAnchor)}
+          onClose={() => this.handleCloseMenu()}
+        >
+          <Tooltip title="Coming Soon" placement="right">
+            <MenuItem
+              aria-label="admin"
+              style={{color: "#ccc"}}
+              onClick={() => this.handleCloseMenu()}
+            >Sign In</MenuItem>
+          </Tooltip>
           <MenuItem
-            aria-label="admin"
-            style={{color: "#ccc"}}
-            onClick={() => this.handleCloseMenu()}
-          >Sign In</MenuItem>
-        </Tooltip>
-        <MenuItem
-          onClick={this.props.onOpenAbout}
-        >About Photobooth</MenuItem>
-      </Menu>
+            onClick={this.props.onOpenAbout}
+          >About Photobooth</MenuItem>
+        </Menu>
+      }
     </div>
   }
 }

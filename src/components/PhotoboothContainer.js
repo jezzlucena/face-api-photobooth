@@ -1,5 +1,6 @@
 import React from 'react'
 import FaceDetectionSketch from './FaceDetectionSketch'
+import EmailDialog from './EmailDialog'
 import UploadDialog from './UploadDialog'
 import P5Wrapper from 'react-p5-wrapper'
 import './PhotoboothContainer.scss'
@@ -15,6 +16,7 @@ import NavigateNextIcon from '@material-ui/icons/NavigateNext'
 import ReplayIcon from '@material-ui/icons/Replay'
 import CloseIcon from '@material-ui/icons/Close'
 
+const EMAIL_REGEX = /^[a-zA-Z0-9]+@[a-zA-Z0-9]+\.[A-Za-z]+$/
 
 const FILTERS = [
   'NO FILTER',
@@ -28,6 +30,7 @@ const FILTERS = [
 const STAND_BY = 'STAND_BY'
 const DETECT = 'DETECTING'
 const FINISHED = 'FINISHED'
+const EMAIL = 'EMAIL'
 const UPLOAD = 'UPLOAD'
 
 export default class PhotoboothContainer extends React.Component {
@@ -41,18 +44,22 @@ export default class PhotoboothContainer extends React.Component {
   }
 
   handleUpload() {
-    fetch('https://face-api-photobooth.herokuapp.com/photo', {
+    fetch(`${process.env.REACT_APP_SERVER_URL}/photo`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
+        email: this.state.email,
         base64Image: this.state.imageData,
       })
     })
     .then(response => response.json())
-    .then(data => this.setState({imageUrl: data.imageUrl}))
+    .then(data => this.setState({
+      photoObj: data,
+      imageUrl: `${process.env.REACT_APP_AWS_BASE_URL}/${data.key}`
+    }))
     .catch(err => this.setState({uploadError: true}))
 
     this.setState({mode: UPLOAD, uploadError: false, imageUrl: null})
@@ -76,6 +83,8 @@ export default class PhotoboothContainer extends React.Component {
       currentFilter: 0,
       uploadError: false,
       imageUrl: null,
+      email: null,
+      emailError: null
     })
   }
 
@@ -123,7 +132,7 @@ export default class PhotoboothContainer extends React.Component {
             variant="contained"
             color="primary"
             size="large"
-            onClick={() => this.handleUpload()}
+            onClick={() => this.setState({mode: EMAIL})}
             startIcon={<CloudUploadIcon />}
           >Upload Photo</Button>
         </div>
@@ -133,7 +142,7 @@ export default class PhotoboothContainer extends React.Component {
   }
 
   render() {
-    let wrapperFinishedClass = [FINISHED, UPLOAD].includes(this.state.mode) ? 'finished' : ''
+    let wrapperFinishedClass = [FINISHED, EMAIL, UPLOAD].includes(this.state.mode) ? 'finished' : ''
 
     return (
       <div className="PhotoboothContainer">
@@ -156,6 +165,21 @@ export default class PhotoboothContainer extends React.Component {
             Smile within the frame to take a picture
           </Paper>
         }
+
+        <EmailDialog
+          open={this.state.mode === EMAIL}
+          imageUrl={this.state.imageUrl}
+          email={this.state.email}
+          error={this.state.emailError}
+          onChange={email => {
+            let emailError = !EMAIL_REGEX.test(email)
+            this.setState({email, emailError})
+          }}
+          onConfirm={() => {
+            if (this.state.email && !this.state.emailError) this.handleUpload()
+          }}
+          onReset={() => this.handleReset()}
+        />
 
         <UploadDialog
           open={this.state.mode === UPLOAD}
