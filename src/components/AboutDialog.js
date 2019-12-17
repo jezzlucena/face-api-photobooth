@@ -65,25 +65,6 @@ export default class AboutDialog extends React.Component {
                 </List>
               </Paper>
               <Paper className="AboutDialog-list">
-                <h3>Machine Learning</h3>
-                <List>
-                  <ListItem>
-                    <ListItemText
-                      primary="TensorFlow.js"
-                      secondary="A library for machine learning in JavaScript."
-                    />
-                  </ListItem>
-                  <ListItem>
-                    <ListItemText
-                      primary="face-api.js"
-                      secondary="Face recognition API for the browser built on top of TensorFlow.js."
-                    />
-                  </ListItem>
-                </List>
-              </Paper>
-            </Grid>
-            <Grid xs={12} sm={6} item>
-              <Paper className="AboutDialog-list">
                 <h3>Back End</h3>
                 <List>
                   <ListItem>
@@ -96,6 +77,37 @@ export default class AboutDialog extends React.Component {
                     <ListItemText
                       primary="Express"
                       secondary="A web application framework for Node.js designed for building web applications and APIs."
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="nodemailer"
+                      secondary="A module for Node.js applications to allow email sending."
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="MongoDB"
+                      secondary="A cross-platform NoSQL document-oriented database program."
+                    />
+                  </ListItem>
+                </List>
+              </Paper>
+            </Grid>
+            <Grid xs={12} sm={6} item>
+              <Paper className="AboutDialog-list">
+                <h3>Machine Learning</h3>
+                <List>
+                  <ListItem>
+                    <ListItemText
+                      primary="TensorFlow.js"
+                      secondary="A library for machine learning in JavaScript."
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="face-api.js"
+                      secondary="Face recognition API for the browser built on top of TensorFlow.js."
                     />
                   </ListItem>
                 </List>
@@ -117,8 +129,20 @@ export default class AboutDialog extends React.Component {
                   </ListItem>
                   <ListItem>
                     <ListItemText
+                      primary="Sendgrid"
+                      secondary="A customer communication platform for transactional and marketing email."
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
                       primary="Heroku"
                       secondary="A cloud platform as a service supporting several programming languages."
+                    />
+                  </ListItem>
+                  <ListItem>
+                    <ListItemText
+                      primary="mLab"
+                      secondary="A fully managed cloud database service that hosts MongoDB databases."
                     />
                   </ListItem>
                 </List>
