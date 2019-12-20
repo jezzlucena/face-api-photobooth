@@ -24,7 +24,6 @@ const FILTERS = [
   'GRAY',
   'OPAQUE',
   'INVERT',
-  'ERODE',
 ]
 
 const STAND_BY = 'STAND_BY'

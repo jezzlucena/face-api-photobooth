@@ -19,7 +19,7 @@ const CAPTURE_CONSTRAINTS = {
     facingMode: "user",
     width: { ideal: CAPTURE_WIDTH },
     height: { ideal: CAPTURE_HEIGHT },
-    frameRate: { ideal: 10, max: 60 }
+    frameRate: { ideal: 24, max: 60 }
   },
   audio: false
 }
@@ -64,8 +64,6 @@ export default function sketch (p) {
         return p.INVERT
       case 'OPAQUE':
         return p.OPAQUE
-      case 'ERODE':
-        return p.ERODE
       default:
         return
     }
@@ -100,6 +98,13 @@ export default function sketch (p) {
 
       readyToDetect = true
       resizeCanvas()
+
+      setTimeout(function() {
+        faceapi
+          .detectAllFaces(capture.id(), TINY_FACE_OPTIONS)
+          .withFaceExpressions()
+          .then((data) => mapFaceDetectionData(data))
+      }, 100)
     })
   }
 
@@ -159,10 +164,13 @@ export default function sketch (p) {
 
     if (readyToDetect) {
       readyToDetect = false
-      faceapi
-        .detectAllFaces(capture.id(), TINY_FACE_OPTIONS)
-        .withFaceExpressions()
-        .then((data) => mapFaceDetectionData(data))
+
+      setTimeout(function() {
+        faceapi
+          .detectAllFaces(capture.id(), TINY_FACE_OPTIONS)
+          .withFaceExpressions()
+          .then((data) => mapFaceDetectionData(data))
+      }, 0)
     }
   }
 }
