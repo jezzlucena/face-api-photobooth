@@ -20,7 +20,7 @@
     "react": "^16.9.0",
     "react-dom": "^16.9.0",
     "react-p5-wrapper": "^2.0.0",
-    "react-scripts": "^3.4.3",
+    "react-scripts": "^5.0.1",
     "shortid": "^2.2.15"
   },
   "scripts": {
