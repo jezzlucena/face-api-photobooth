@@ -1,0 +1,11 @@
+name: 'face-api-photobooth'
+
+services:
+  backend:
+    build: ./
+    volumes:
+      - ./:/app
+      - '/app/node_modules'
+    ports:
+      - 8084:8084
+    restart: always
