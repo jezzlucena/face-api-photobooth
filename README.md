@@ -2,7 +2,7 @@
 
 Photobooth is web application that recognizes a person's facial expressions and takes a photo once the user smiles within a bounding box in the captured image.
 
-## [Live Demo >](https://face-api-photobooth.herokuapp.com/)
+## [Live Demo >](https://photobooth.jezzlucena.com/)
 
 ## Quick Start
 
