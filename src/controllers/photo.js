@@ -38,7 +38,7 @@ exports.create = (req, res) => {
 
     photo.save().then(sPhoto => {
       transporter.sendMail({
-        from: 'face.api.photobooth@gmail.com',
+        from: process.env.SENDGRID_SENDER_IDENTITY_EMAIL,
         to: req.body.email,
         subject: 'Photobooth: Your photo is here!',
         text: `Hello!\n\n
