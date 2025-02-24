@@ -140,12 +140,13 @@ export default function sketch (p) {
       _y: CAPTURE_HEIGHT/2 - FRAMING_BOX_HEIGHT/2,
     }
 
-    p.stroke('white')
-    p.strokeWeight(4)
+    p.stroke('red')
+    p.strokeWeight(5)
     p.rect(FRAMING_BOX._x, FRAMING_BOX._y, FRAMING_BOX._width, FRAMING_BOX._height)
 
     let allFacesWithinBoundaries = faceDrawings.reduce((acc, drawing) => {
-      p.strokeWeight(2)
+      p.stroke('white')
+      p.strokeWeight(1)
       p.rect(drawing.detection.box._x, drawing.detection.box._y, drawing.detection.box._width, drawing.detection.box._height)
 
       return acc && (drawing.expressions.happy >= 0.9) &&
