@@ -7,11 +7,11 @@ const MODELS_URL = '/models'
 let CAPTURE_WIDTH = 1280
 let CAPTURE_HEIGHT = 720
 
-let FRAMING_BOX_WIDTH = 400
-let FRAMING_BOX_HEIGHT = 400
+let FRAMING_BOX_WIDTH = 500
+let FRAMING_BOX_HEIGHT = 500
 
 const TINY_FACE_OPTIONS = new faceapi.TinyFaceDetectorOptions({
-  inputSize: 256,
+  inputSize: 512,
   scoreThreshold: 0.5,
 })
 
@@ -94,7 +94,7 @@ export default function sketch (p) {
     capture = p.createCapture(CAPTURE_CONSTRAINTS, async stream => {
       await faceapi.loadTinyFaceDetectorModel(MODELS_URL)
       await faceapi.loadFaceExpressionModel(MODELS_URL)
-      
+
       capture.id("video_element")
       capture.hide()
 

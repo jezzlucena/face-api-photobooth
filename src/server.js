@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 
 dotenv.config({ path: path.resolve(__dirname, "..", ".env") })
 
-mongoose.connect(process.env.MONGOOSE_URL, { useNewUrlParser: true, useUnifiedTopology: true })
+mongoose.connect(process.env.VITE_MONGOOSE_URL)
 
 const photoController = require('./controllers/photo')
 
@@ -20,7 +20,7 @@ app.use(bodyParser.json({ limit: '50mb' }))
 var whitelist = ['https://photobooth.jezzlucena.com', 'http://localhost:8084', 'http://localhost:3000']
 var corsOptions = {
   origin: function (origin, callback) {
-    if (whitelist.includes(origin)) {
+    if (!origin || whitelist.includes(origin)) {
       callback(null, true)
     } else {
       callback(new Error('Not allowed by CORS'))
@@ -30,10 +30,8 @@ var corsOptions = {
 
 app.use(cors(corsOptions))
 
-app.get("/", function(req, res) {
-  res.sendFile(path.join(__dirname, "..", "build/index.html"))
-})
+app.use(express.static('dist'))
 
 app.put('/photo', photoController.create)
 
-app.listen(process.env.PORT || 8080)
+app.listen(process.env.VITE_PORT || 8084)

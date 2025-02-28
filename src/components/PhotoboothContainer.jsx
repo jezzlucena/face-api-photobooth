@@ -43,7 +43,7 @@ export default class PhotoboothContainer extends React.Component {
   }
 
   handleUpload() {
-    fetch(`${process.env.REACT_APP_SERVER_URL}/photo`, {
+    fetch(`${process.env.VITE_APP_SERVER_URL}/photo`, {
       method: 'PUT',
       headers: {
         'Accept': 'application/json',
@@ -57,7 +57,7 @@ export default class PhotoboothContainer extends React.Component {
     .then(response => response.json())
     .then(data => this.setState({
       photoObj: data,
-      imageUrl: `${process.env.REACT_APP_AWS_BASE_URL}/${data.key}`
+      imageUrl: `${process.env.VITE_APP_AWS_BASE_URL}/${data.key}`
     }))
     .catch(err => this.setState({uploadError: true}))
 

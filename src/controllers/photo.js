@@ -1,22 +1,24 @@
 const Photo = require('../models/photo')
 
 const shortid = require('shortid')
-const AWS = require('aws-sdk')
+
+const { S3 } = require('@aws-sdk/client-s3');
+
 const nodemailer = require('nodemailer')
 const sgTransport = require('nodemailer-sendgrid-transport')
 
 const transporter = nodemailer.createTransport(sgTransport({
   auth: {
-    api_key: process.env.SENDGRID_API_KEY
+    api_key: process.env.VITE_SENDGRID_API_KEY
   }
 }))
 
-AWS.config.update({
-  accessKeyId: process.env.AWS_ACCESS_KEY,
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY
+const s3 = new S3({
+  credentials: {
+    accessKeyId: process.env.VITE_AWS_ACCESS_KEY,
+    secretAccessKey: process.env.VITE_AWS_SECRET_ACCESS_KEY
+  }
 })
-
-const s3 = new AWS.S3()
 
 exports.create = (req, res) => {
   var dataUrl = req.body.base64Image
@@ -38,13 +40,13 @@ exports.create = (req, res) => {
 
     photo.save().then(sPhoto => {
       transporter.sendMail({
-        from: process.env.SENDGRID_SENDER_IDENTITY_EMAIL,
+        from: process.env.VITE_SENDGRID_SENDER_IDENTITY_EMAIL,
         to: req.body.email,
         subject: 'Photobooth: Your photo is here!',
         text: `Hello!\n\n
 
               The photo you took using Photobooth is available at\n
-              ${process.env.REACT_APP_AWS_BASE_URL}/${photo.key}\n\n
+              ${process.env.VITE_APP_AWS_BASE_URL}/${photo.key}\n\n
 
               Kind regards,
               The Photobooth Team`
