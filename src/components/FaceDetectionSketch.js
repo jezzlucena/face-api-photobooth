@@ -1,5 +1,6 @@
 import "p5/lib/addons/p5.dom"
 import * as faceapi from 'face-api.js'
+import { toast } from 'react-toastify'
 
 const MODELS_URL = '/models'
 
@@ -69,15 +70,31 @@ export default function sketch (p) {
     }
   }
 
+  async function getFrontCamera() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "user" }, // "user" specifies the front camera
+        audio: false, // Optional: set to true if you need audio as well
+      });
+      return stream;
+    } catch (error) {
+      toast.error("Error accessing the camera.", { position: toast.POSITION.BOTTOM_RIGHT })
+      console.error("Error accessing the camera:", error);
+      return null;
+    }
+  }
+
   p.windowResized = async function() {
     resizeCanvas()
   }
 
   p.setup = async function () {
-    await faceapi.loadTinyFaceDetectorModel(MODELS_URL)
-    await faceapi.loadFaceExpressionModel(MODELS_URL)
+    getFrontCamera()
 
-    capture = p.createCapture(CAPTURE_CONSTRAINTS, stream => {
+    capture = p.createCapture(CAPTURE_CONSTRAINTS, async stream => {
+      await faceapi.loadTinyFaceDetectorModel(MODELS_URL)
+      await faceapi.loadFaceExpressionModel(MODELS_URL)
+      
       capture.id("video_element")
       capture.hide()
 
@@ -122,7 +139,13 @@ export default function sketch (p) {
   }
 
   p.draw = async () => {
-    if (!capture || !canvas || !capturing) return
+    if (!canvas || !capturing) return
+
+    if (!capture || !capture.loadedmetadata) {
+      p.fill('red')
+      p.text("Camera not available", CAPTURE_WIDTH/2, CAPTURE_HEIGHT/2)
+      return
+    }
 
     p.translate(CAPTURE_WIDTH, 0)
     p.scale(-1, 1)
