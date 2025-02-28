@@ -14,6 +14,7 @@ const transporter = nodemailer.createTransport(sgTransport({
 }))
 
 const s3 = new S3({
+  region: "us-west-1",
   credentials: {
     accessKeyId: process.env.VITE_AWS_ACCESS_KEY,
     secretAccessKey: process.env.VITE_AWS_SECRET_ACCESS_KEY
@@ -50,11 +51,11 @@ exports.create = (req, res) => {
 
               Kind regards,
               The Photobooth Team`
-      }, function(error, info){
-        if (!error) {
+      }, function(err, info){
+        if (!err) {
           res.json(sPhoto)
         } else {
-          console.log(error)
+          console.error(err)
         }
       })
     })
